@@ -7,8 +7,8 @@ import com.fsck.k9.mail.Address
  */
 object AddressHeaderBuilder {
     @JvmStatic
-    fun createHeaderValue(addresses: Array<Address>): String? {
-        if (addresses.isEmpty()) return null
+    fun createHeaderValue(addresses: Array<Address>): String {
+        require(addresses.isNotEmpty()) { "addresses must not be empty" }
 
         return buildString {
             var lineLength = 0

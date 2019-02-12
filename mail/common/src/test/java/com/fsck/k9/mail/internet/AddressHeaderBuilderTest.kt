@@ -53,10 +53,8 @@ class AddressHeaderBuilderTest {
         """.trimMargin().crlf(), headerValue)
     }
 
-    @Test
-    fun createHeaderValue_withoutAddresses_shouldReturnNull() {
-        val headerValue = AddressHeaderBuilder.createHeaderValue(emptyArray())
-
-        assertNull(headerValue)
+    @Test(expected = IllegalArgumentException::class)
+    fun createHeaderValue_withoutAddresses_shouldThrow() {
+        AddressHeaderBuilder.createHeaderValue(emptyArray())
     }
 }

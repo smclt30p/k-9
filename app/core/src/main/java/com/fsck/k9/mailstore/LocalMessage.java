@@ -439,10 +439,10 @@ public class LocalMessage extends MimeMessage {
     }
 
     private void setRecipients(String headerName, Address[] addresses) {
-        String headerValue = AddressHeaderBuilder.createHeaderValue(addresses);
-        if (headerValue == null) {
+        if (addresses.length == 0) {
             removeHeader(headerName);
         } else {
+            String headerValue = AddressHeaderBuilder.createHeaderValue(addresses);
             setHeader(headerName, headerValue);
         }
     }

@@ -136,8 +136,8 @@ public abstract class MessageBuilder {
     }
 
     private void setRecipients(MimeMessage message, String headerName, Address[] addresses) {
-        String headerValue = AddressHeaderBuilder.createHeaderValue(addresses);
-        if (headerValue != null) {
+        if (addresses.length > 0) {
+            String headerValue = AddressHeaderBuilder.createHeaderValue(addresses);
             message.setHeader(headerName, headerValue);
         }
     }
