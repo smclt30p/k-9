@@ -1,6 +1,8 @@
 package com.fsck.k9
 
 import android.app.Application
+import android.content.Context
+import androidx.multidex.MultiDex
 import com.fsck.k9.activity.MessageCompose
 import com.fsck.k9.controller.MessagingController
 import com.fsck.k9.external.MessageProvider
@@ -10,6 +12,10 @@ class App : Application() {
     private val messagingController: MessagingController by inject()
     private val messagingListenerProvider: MessagingListenerProvider by inject()
 
+    override fun attachBaseContext(base: Context?) {
+        MultiDex.install(base);
+        super.attachBaseContext(base)
+    }
 
     override fun onCreate() {
         Core.earlyInit(this)
