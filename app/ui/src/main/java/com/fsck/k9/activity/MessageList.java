@@ -173,8 +173,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
     private LocalSearch search;
     private boolean singleFolderMode;
 
-    private MenuItem menuButtonCheckMail;
-    private View actionButtonIndeterminateProgress;
     private int lastDirection = (K9.messageViewShowNext()) ? NEXT : PREVIOUS;
 
     /**
@@ -545,8 +543,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
     private void initializeActionBar() {
         actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-
-        actionButtonIndeterminateProgress = getActionButtonIndeterminateProgress();
     }
 
     private void initializeDrawer(Bundle savedInstanceState) {
@@ -894,9 +890,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
         } else if (id == R.id.toggle_message_view_theme) {
             onToggleTheme();
             return true;
-        } else if (id == R.id.check_mail) {     // MessageList
-            messageListFragment.checkMail();
-            return true;
         } else if (id == R.id.set_sort_date) {
             messageListFragment.changeSort(SortType.SORT_DATE);
             return true;
@@ -1002,7 +995,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.message_list_option, menu);
         this.menu = menu;
-        menuButtonCheckMail = menu.findItem(R.id.check_mail);
         return true;
     }
 
@@ -1150,7 +1142,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
 
         if (displayMode == DisplayMode.MESSAGE_VIEW || messageListFragment == null ||
                 !messageListFragment.isInitialized()) {
-            menu.findItem(R.id.check_mail).setVisible(false);
             menu.findItem(R.id.set_sort).setVisible(false);
             menu.findItem(R.id.select_all).setVisible(false);
             menu.findItem(R.id.send_messages).setVisible(false);
@@ -1172,7 +1163,6 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
                 menu.findItem(R.id.expunge).setVisible(messageListFragment.isRemoteFolder() &&
                         messageListFragment.isAccountExpungeCapable());
             }
-            menu.findItem(R.id.check_mail).setVisible(messageListFragment.isCheckMailSupported());
             menu.findItem(R.id.empty_trash).setVisible(messageListFragment.isShowingTrashFolder());
 
             // If this is an explicit local search, show the option to search on the server
@@ -1451,15 +1441,7 @@ public class MessageList extends K9Activity implements MessageListFragmentListen
 
     @Override
     public void enableActionBarProgress(boolean enable) {
-        if (menuButtonCheckMail == null) {
-            return;
-        }
 
-        if (menuButtonCheckMail.isVisible()) {
-            menuButtonCheckMail.setActionView(enable ? actionButtonIndeterminateProgress : null);
-        } else {
-            menuButtonCheckMail.setActionView(null);
-        }
     }
 
     @Override
